@@ -1249,7 +1249,7 @@ EOF
     "dns":{
         "servers":[
             {
-                "address":"local"
+                "address":"https://208.67.222.222/dns-query"
             }
         ]
     }
