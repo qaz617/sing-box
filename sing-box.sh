@@ -1278,8 +1278,6 @@ EOF
     "inbounds":[
         {
             "type":"vless",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[11]} ${NODE_TAG[0]}",
             "listen":"::",
             "listen_port":$PORT_XTLS_REALITY,
@@ -1330,8 +1328,6 @@ EOF
     "inbounds":[
         {
             "type":"hysteria2",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[12]} ${NODE_TAG[1]}",
             "listen":"::",
             "listen_port":$PORT_HYSTERIA2,
@@ -1368,8 +1364,6 @@ EOF
     "inbounds":[
         {
             "type":"tuic",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[13]} ${NODE_TAG[2]}",
             "listen":"::",
             "listen_port":$PORT_TUIC,
@@ -1406,8 +1400,6 @@ EOF
     "inbounds":[
         {
             "type":"shadowtls",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[14]} ${NODE_TAG[3]}",
             "listen":"::",
             "listen_port":$PORT_SHADOWTLS,
@@ -1456,8 +1448,6 @@ EOF
     "inbounds":[
         {
             "type":"shadowsocks",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[15]} ${NODE_TAG[4]}",
             "listen":"::",
             "listen_port":$PORT_SHADOWSOCKS,
@@ -1488,8 +1478,6 @@ EOF
     "inbounds":[
         {
             "type":"trojan",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[16]} ${NODE_TAG[5]}",
             "listen":"::",
             "listen_port":$PORT_TROJAN,
@@ -1531,8 +1519,6 @@ EOF
     "inbounds":[
         {
             "type":"vmess",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[17]} ${NODE_TAG[6]}",
             "listen":"::",
             "listen_port":$PORT_VMESS_WS,
@@ -1577,8 +1563,6 @@ EOF
     "inbounds":[
         {
             "type":"vless",
-            "sniff_override_destination":true,
-            "sniff":true,
             "tag":"${NODE_NAME[18]} ${NODE_TAG[7]}",
             "listen":"::",
             "listen_port":$PORT_VLESS_WS,
@@ -1630,8 +1614,6 @@ EOF
     "inbounds":[
         {
             "type":"vless",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[19]} ${NODE_TAG[8]}",
             "listen":"::",
             "listen_port":$PORT_H2_REALITY,
@@ -1684,8 +1666,6 @@ EOF
     "inbounds":[
         {
             "type":"vless",
-            "sniff":true,
-            "sniff_override_destination":true,
             "tag":"${NODE_NAME[20]} ${NODE_TAG[9]}",
             "listen":"::",
             "listen_port":$PORT_GRPC_REALITY,
@@ -1712,15 +1692,6 @@ EOF
             "transport": {
                 "type": "grpc",
                 "service_name": "grpc"
-            },
-            "multiplex":{
-                "enabled":true,
-                "padding":true,
-                "brutal":{
-                    "enabled":true,
-                    "up_mbps":1000,
-                    "down_mbps":1000
-                }
             }
         }
     ]
@@ -2116,8 +2087,6 @@ tuic://${UUID[13]}:${TUIC_PASSWORD}@${SERVER_IP_1}:${PORT_TUIC}?alpn=h3&congesti
           \"domain_strategy\":\"\",
           \"listen\":\"127.0.0.1\",
           \"listen_port\":${PORT_SHADOWTLS},
-          \"sniff\":true,
-          \"sniff_override_destination\":false,
           \"tag\": \"ShadowTLS\",
           \"type\":\"mixed\"
       }
