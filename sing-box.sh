@@ -1249,7 +1249,8 @@ EOF
     "dns":{
         "servers":[
             {
-                "address":"https://208.67.222.222/dns-query"
+                "address":"https://dth5kdjxs3.cloudflare-gateway.com/dns-query",
+                "address_resolver": "8.8.8.8"
             }
         ]
     }
