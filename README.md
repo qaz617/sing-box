@@ -9,20 +9,23 @@
 - [3.Sing-box for VPS 运行脚本](README.md#3sing-box-for-vps-运行脚本)
 - [4.无交互极速安装](README.md#4无交互极速安装)
 - [5.Json Argo Tunnel 获取 (推荐)](README.md#5json-argo-tunnel-获取-推荐)
-- [6.Token Argo Tunnel 方案设置任意端口回源以使用 cdn](README.md#6token-argo-tunnel-方案设置任意端口回源以使用-cdn)
-- [7.Vmess / Vless 方案设置任意端口回源以使用 cdn](README.md#7vmess--vless-方案设置任意端口回源以使用-cdn)
-- [8.Docker 和 Docker compose 安装](README.md#8docker-和-docker-compose-安装)
-- [9.Nekobox 设置 shadowTLS 方法](README.md#9nekobox-设置-shadowtls-方法)
-- [10.主体目录文件及说明](README.md#10主体目录文件及说明)
-- [11.自签证书在不同客户端中的处理方式对比](README.md#11自签证书在不同客户端中的处理方式对比)
-- [12.鸣谢下列作者的文章和项目](README.md#12鸣谢下列作者的文章和项目)
-- [13.感谢赞助商](README.md#13感谢赞助商)
-- [14.免责声明](README.md#14免责声明)
-- [15.开源证书](README.md#15开源证书)
+- [6.Token Argo Tunnel 方案设置任意端口回源以使用 CDN](README.md#6token-argo-tunnel-方案设置任意端口回源以使用-cdn)
+- [7.使用 Cloudflare API 自动创建 Argo](README.md#7使用-cloudflare-api-自动创建-argo)
+- [8.Vmess / Vless 方案设置任意端口回源以使用 CDN](README.md#8vmess--vless-方案设置任意端口回源以使用-cdn)
+- [9.Docker 和 Docker compose 安装](README.md#9docker-和-docker-compose-安装)
+- [10.Nekobox 设置 shadowTLS 方法](README.md#10nekobox-设置-shadowtls-方法)
+- [11.主体目录文件及说明](README.md#11主体目录文件及说明)
+- [12.自签证书在不同客户端中的处理方式对比](README.md#12自签证书在不同客户端中的处理方式对比)
+- [13.鸣谢下列作者的文章和项目](README.md#13鸣谢下列作者的文章和项目)
+- [14.感谢赞助商](README.md#14感谢赞助商)
+- [15.免责声明](README.md#15免责声明)
+- [16.开源证书](README.md#16开源证书)
 
 
 * * *
 ## 1.更新信息
+2025.12.11 v1.3.2 Argo tunnel creation via API. Suitable for users with large-scale deployments, one Token for all. Automatically completed: Create tunnel > DNS configuration > Origin settings. Thanks to [zmlu] for providing the method: https://raw.githubusercontent.com/zmlu/sba/main/tunnel.sh; Argo 隧道新增通过 API 创建，适合大量部署的用户，一个 Token 走天下。自动完成：创建隧道 > DNS 配置 > 回源设置。感谢热心网友 [zmlu] 提供的方法: https://raw.githubusercontent.com/zmlu/sba/main/tunnel.sh
+
 2025.11.12 v1.3.1 1. Reality Configuration Update: In Reality configurations, the original multiplexing (multiplex) has been replaced with xtls-rprx-vision flow control, improving transmission efficiency, reducing latency, and enhancing security. The original configuration conversion script command remains fully compatible and unchanged — `bash <(curl -sSL https://raw.githubusercontent.com/fscarmen/tools/main/vision.sh)`; 2. Quick Install Mode: Added a one-click installation feature that auto-fills all parameters, simplifying the deployment process. Chinese users can use -l or -L; English users can use -k or -K. Case-insensitive support makes operations more flexible; 3. Custom Reality Key Support: In response to user feedback, you can now specify a custom Reality private key via --REALITY_PRIVATE=<privateKey>. The script will automatically compute the corresponding public key using the integrated API. If left blank, it generates a random private-public key pair in real-time; 4. Enhanced HTTP + Reality Support in Clash Clients: Added full compatibility for HTTP + Reality transport in Clash clients, improving connection stability and performance; 1. Reality 配置变更：在 Reality 配置中，将原来的多路复用（multiplex）替换为 xtls-rprx-vision 流控，提升传输效率、降低延迟并增强安全性。原配置转换脚本命令—— `bash <(curl -sSL https://raw.githubusercontent.com/fscarmen/tools/main/vision.sh)` ; 2. 极速安装模式：新增一键安装功能，所有参数自动填充，简化部署流程。中文用户使用 -l 或 -L，英文用户使用 -k 或 -K，大小写均支持，操作更灵; 3. 自定义 Reality 密钥支持：响应用户反馈，现支持通过 --REALITY_PRIVATE=<privateKey> 指定自定义 Reality 私钥，脚本将调用相关 API 自动计算对应公钥。若留空，则实时生成随机公私钥; 4. HTTP + Reality 在 Clash 客户端的增强支持：补充了对 Clash 客户端中 HTTP + Reality 传输方式的完整兼容，提升了连接稳定性和性能
 
 2025.11.10 v1.3.0 Replace multiplex with xtls-rprx-vision flow control in reality configuration. The original configuration conversion script: bash <(curl -sSL https://raw.githubusercontent.com/fscarmen/tools/main/vision.sh); 在 reality 配置中将多路复用 multiplex 替换为 xtls-rprx-vision 流控。原来的配置转换脚本: bash <(curl -sSL https://raw.githubusercontent.com/fscarmen/tools/main/vision.sh)
@@ -152,7 +155,7 @@ sb
   | -p <start port> | Change the nodes start port 更改节点的起始端口 |
   | -d              | Change CDN 更换 CDN |
   | -s              | Stop / Start the Sing-box service 停止/开启 Sing-box 服务 |
-  | -a              | Stop / Start the Argo Tunnel service 停止/开启 Argo Tunnel 服务 | 
+  | -a              | Stop / Start the Argo Tunnel service 停止/开启 Argo Tunnel 服务 |
   | -v              | Sync Argo Xray to the newest 同步 Argo Xray 到最新版本 |
   | -b              | Upgrade kernel, turn on BBR, change Linux system 升级内核、安装BBR、DD脚本 |
   | -r              | Add and remove protocols 添加和删除协议 |
@@ -330,7 +333,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-b
 </details>
 
 <details>
-    <summary> 使用 Argo Token 隧道，不要订阅（点击即可展开或收起）</summary>
+    <summary> 使用 Cloudflare API 创建 Argo 隧道，不要订阅（点击即可展开或收起）</summary>
 <br>
 
 ```
@@ -344,7 +347,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-b
   --UUID_CONFIRM 20f7fca4-86e5-4ddf-9eed-24142073d197 \
   --ARGO=true \
   --ARGO_DOMAIN=sb.argo.com \
-  --ARGO_AUTH='sudo cloudflared service install eyJhIjoiOWNjOWUzZTRkOGYyOWQyYTAyZTI5N2YxNGYyMDUxM2EiLCJ0IjoiOGNiZDA4ZjItNGM0MC00OGY1LTlmZDYtZjlmMWQ0YTcxMjUyIiwicyI6IllXWTFORGN4TW1ZdE5HTXdZUzAwT0RaakxUbGxNMkl0Wm1VMk5URTFOR0l4TkdKayJ9' \
+  --ARGO_AUTH='gKyflo59sDb5bI_fNr2OWCDnpihMUBIbJ29YsrtS' \
   --PORT_HOPPING_RANGE 50000:51000 \
   --REALITY_PRIVATE=UPO3FWlg6YDJbASYi7KIESibPec_K46edTvDPbqEYFk \
   --NODE_NAME_CONFIRM bucket
@@ -366,7 +369,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-b
 | --UUID_CONFIRM | 协议的 uuid 或者 password |
 | --ARGO | 是否使用 Argo Tunnel，如果是填 true，如果使用 Origin rules，则可以忽略本 Key |
 | --ARGO_DOMAIN | 固定 Argo 域名，即是 Json 或者 Token 隧道的域名 |
-| --ARGO_AUTH | Json 或者 Token 隧道的内容 |
+| --ARGO_AUTH | Json, Token 隧道的内容，或者是 Cloudflare API 密钥 |
 | --PORT_HOPPING_RANGE | hysteria2 跳跃端口范围，如 50000:51000 |
 | --REALITY_PRIVATE | reality 密钥 |
 | --NODE_NAME_CONFIRM | 节点名 |
@@ -381,7 +384,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-b
 如想手动，可以参考，以 Debian 为例，需要用到的命令，[Deron Cheng - CloudFlare Argo Tunnel 试用](https://zhengweidong.com/try-cloudflare-argo-tunnel)
 
 
-## 6.Token Argo Tunnel 方案设置任意端口回源以使用 cdn
+## 6.Token Argo Tunnel 方案设置任意端口回源以使用 CDN
 详细教程: [群晖套件：Cloudflare Tunnel 内网穿透中文教程 支持DSM6、7](https://imnks.com/5984.html)
 
 <img width="1510" alt="image" src="https://github.com/fscarmen/sba/assets/62703343/bb2d9c43-3585-4abd-a35b-9cfd7404c87c">
@@ -389,7 +392,26 @@ bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-b
 <img width="1638" alt="image" src="https://github.com/fscarmen/sing-box/assets/62703343/a4868388-d6ab-4dc7-929c-88bc775ca851">
 
 
-## 7.Vmess / Vless 方案设置任意端口回源以使用 cdn
+## 7.使用 Cloudflare API 自动创建 Argo
+
+### API Token 最小权限要求:
+1. Account - Cloudflare One Connectors: cloudflared - Edit
+2. Zone - DNS - Edit
+
+### 创建 API Token 步骤:
+1. 访问 https://dash.cloudflare.com/profile/api-tokens
+2. 点击 "Create Token"
+3. 选择 "Create Custom Token"
+4. 添加以下权限:
+   - Account > Cloudflare One Connectors: cloudflared > Edit
+   - Zone > DNS > Edit
+5. Account Resources: Include > 所需账户
+6. Zone Resources: Include > 特定Zone > 所需Zone
+
+<img width="1336" height="691" alt="image" src="https://github.com/user-attachments/assets/e9c6d946-02ed-48fc-81c4-0fe374461eca" />
+
+
+## 8.Vmess / Vless 方案设置任意端口回源以使用 CDN
 举例子 IPv6: vmess [2a01:4f8:272:3ae6:100b:ee7a:ad2f:1]:10006
 <img width="1052" alt="image" src="https://github.com/fscarmen/sing-box/assets/62703343/bc2df37a-95c4-4ba0-9c84-5d9c745c3a7b">
 
@@ -400,7 +422,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/fscarmen/sing-box/main/sing-b
 <img width="1556" alt="image" src="https://github.com/fscarmen/sing-box/assets/62703343/164bf255-a6be-40bc-a724-56e13da7a1e6">
 
 
-## 8.Docker 和 Docker compose 安装
+## 9.Docker 和 Docker compose 安装
 
 ### 说明:
 * 支持三种 Argo 类型隧道: 临时 (不需要域名) / Json / Token
@@ -472,7 +494,7 @@ services:
             - H2_REALITY=true
             - GRPC_REALITY=true
             - ANYTLS=true
-            - UUID=20f7fca4-86e5-4ddf-9eed-24142073d197 
+            - UUID=20f7fca4-86e5-4ddf-9eed-24142073d197
             - CDN=www.csgo.com
             - NODE_NAME=sing-box
             - ARGO_DOMAIN=sb.argo.com
@@ -512,13 +534,13 @@ services:
 | -e GRPC_REALITY | 是 |    true 为启用 gRPC over reality 协议，不需要的话删除本参数或填 false |
 | -e ANYTLS | 是 |          true 为启用 AnyTLS 协议，不需要的话删除本参数或填 false |
 | -e UUID | 否 | 不指定的话 UUID 将默认随机生成 |
-| -e CDN | 否 | 优选域名，不指定的话将使用 www.csgo.com |
+| -e CDN | 否 | 优选域名，不指定的话将使用 skk.moe |
 | -e NODE_NAME | 否 | 节点名称，不指定的话将使用 sing-box |
 | -e ARGO_DOMAIN | 否 | Argo 固定隧道域名 , 与 ARGO_DOMAIN 一并使用才能生效 |
-| -e ARGO_AUTH | 否 | Argo 认证信息，可以是 Json 也可以是 Token，与 ARGO_DOMAIN 一并使用才能生效，不指定的话将使用临时隧道 |
+| -e ARGO_AUTH | 否 | Argo 认证信息，可以是 Json， Token 或者 Cloudflare API，与 ARGO_DOMAIN 一并使用才能生效，不指定的话将使用临时隧道 |
 
 
-## 9.Nekobox 设置 shadowTLS 方法
+## 10.Nekobox 设置 shadowTLS 方法
 1. 复制脚本输出的两个 Neko links 进去
 <img width="630" alt="image" src="https://github.com/fscarmen/sing-box/assets/62703343/db5960f3-63b1-4145-90a5-b01066dd39be">
 
@@ -530,7 +552,7 @@ services:
 <img width="408" alt="image" src="https://github.com/fscarmen/sing-box/assets/62703343/753e7159-92f9-4c88-91b5-867fdc8cca47">
 
 
-## 10.主体目录文件及说明
+## 11.主体目录文件及说明
 
 ```
 /etc/sing-box/                               # 项目主体目录
@@ -583,7 +605,7 @@ services:
 ```
 
 
-## 11.自签证书在不同客户端中的处理方式对比
+## 12.自签证书在不同客户端中的处理方式对比
 
 | 客户端 / 工具 | 使用的证书验证方式 | SNI 是否必须匹配 SAN | 是否依赖完整证书链 | 使用的 Hash / 指纹类型 | SNI 用途说明 |
 |---------------|---------------------|------------------------|------------------------|--------------------------|----------------------|
@@ -595,7 +617,7 @@ services:
 
 
 ### 结论：
- - **V2RayN、NekoBox 必须要 SAN = SNI**，否则“x509: cannot validate certificate because it doesn't contain IP SAN”。  
+ - **V2RayN、NekoBox 必须要 SAN = SNI**，否则“x509: cannot validate certificate because it doesn't contain IP SAN”。
  - **ShadowRocket、Clash、Sing-box、HY2、TUIC 完全不需要 SAN**，因为用的是指纹机制。
 
 ---
@@ -623,14 +645,14 @@ services:
 ### 指纹方式说明
 
 #### **1. X.509 证书链验证**
-- 完整验证 CA → Leaf 证书  
+- 完整验证 CA → Leaf 证书
 - **必须要求：SNI = SAN 中的一个 DNS 名称**
 - 不允许 SAN 不匹配或缺失
 - 用于：**V2RayN / NekoBox**
 
 #### **2. SHA-256(DER) 指纹**
-- 对证书 **整体 DER（二进制）内容** 计算 SHA-256  
-- 包含所有字段（版本、序列号、Subject、SAN、扩展、公钥、签名等）  
+- 对证书 **整体 DER（二进制）内容** 计算 SHA-256
+- 包含所有字段（版本、序列号、Subject、SAN、扩展、公钥、签名等）
 - **任意字段变化 → 指纹都会改变**
 - 用于：**ShadowRocket / Clash Mihomo**
 
@@ -641,11 +663,11 @@ services:
 - 用于：**Sing-box**
 
 
-## 12.鸣谢下列作者的文章和项目:
-千歌 sing-box 模板: https://github.com/chika0801/sing-box-examples  
+## 13.鸣谢下列作者的文章和项目:
+千歌 sing-box 模板: https://github.com/chika0801/sing-box-examples
+zmlu 的 Cloudflare Tunnel 管理脚本: https://raw.githubusercontent.com/zmlu/sba/main/tunnel.sh
 
-
-## 13.感谢赞助商
+## 14.感谢赞助商
 
 ### 🚀 Sponsored by SharonNetworks
 
@@ -667,12 +689,12 @@ SharonNetworks 为您的业务起飞保驾护航！
 想体验同款构建环境？欢迎 [访问 Sharon 官网](https://sharon.io) 或 [加入 Telegram 群组](https://t.me/SharonNetwork) 了解更多并申请赞助。
 
 
-## 14.免责声明
+## 15.免责声明
 * 本程序仅供学习了解, 非盈利目的，请于下载后 24 小时内删除, 不得用作任何商业用途, 文字、数据及图片均有所属版权, 如转载须注明来源。
 * 使用本程序必循遵守部署免责声明。使用本程序必循遵守部署服务器所在地、所在国家和用户所在国家的法律法规, 程序作者不对使用者任何不当行为负责。
 
 
-## 15.开源证书
+## 16.开源证书
 * 本项目严格遵守 GNU GPL v3 许可证 [LICENSE](LICENSE)。
 * 任何形式的复制、分发、修改或衍生使用，必须完整保留原版权声明、许可证文本，并以相同许可证开源发布。违反此条款（如闭源使用、商业独占或未开源修改版）将被视为抄袭，作者保留追究法律责任的权利。
 * 鼓励社区贡献，但请通过 Pull Request 提交。
